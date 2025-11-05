@@ -8,32 +8,60 @@ let gameRun = true;
 const orderNumberField = document.getElementById('orderNumberField');
 const answerField = document.getElementById('answerField');
 
+// Функция для получения случайной фразы вопроса
+function getRandomQuestionPhrase(number) {
+    const random = Math.round(Math.random() * 2);
+    const phrases = [
+        `Да это легко! Ты загадал ${number}?`,
+        `Наверное, это число ${number}?`,
+        `Вы загадали число ${number}?`
+    ];
+    return phrases[random];
+}
+
+// Функция для получения случайной фразы при успехе
+function getRandomSuccessPhrase() {
+    const random = Math.round(Math.random() * 2);
+    const phrases = [
+        `Я всегда угадываю!\n\u{1F60E}`,
+        `Это было несложно!\n\u{1F913}`,
+        `Ура! Я угадал!\n\u{1F389}`
+    ];
+    return phrases[random];
+}
+
+// Функция для получения случайной фразы при сдаче
+function getRandomGiveUpPhrase() {
+    const random = Math.round(Math.random() * 2);
+    const phrases = [
+        `Вы загадали неправильное число!\n\u{1F914}`,
+        `Я сдаюсь..\n\u{1F92F}`,
+        `Не могу угадать! Возможно, вы нарушили правила?\n\u{1F928}`
+    ];
+    return phrases[random];
+}
+
 orderNumberField.innerText = orderNumber;
-answerField.innerText = `Вы загадали число ${answerNumber}?`;
+answerField.innerText = getRandomQuestionPhrase(answerNumber);
 
 document.getElementById('btnLess').addEventListener('click', function () {
     if (gameRun) {
         if (minValue === maxValue) {
-            const phraseRandom = Math.round(Math.random());
-            const answerPhrase = (phraseRandom === 1) ?
-                `Вы загадали неправильное число!\n\u{1F914}` :
-                `Я сдаюсь..\n\u{1F92F}`;
-
-            answerField.innerText = answerPhrase;
+            answerField.innerText = getRandomGiveUpPhrase();
             gameRun = false;
         } else {
             maxValue = answerNumber - 1;
             answerNumber = Math.floor((minValue + maxValue) / 2);
             orderNumber++;
             orderNumberField.innerText = orderNumber;
-            answerField.innerText = `Вы загадали число ${answerNumber}?`;
+            answerField.innerText = getRandomQuestionPhrase(answerNumber);
         }
     }
 })
 
 document.getElementById('btnEqual').addEventListener('click', function () {
     if (gameRun) {
-        answerField.innerText = `Я всегда угадываю\n\u{1F60E}`
+        answerField.innerText = getRandomSuccessPhrase();
         gameRun = false;
     }
 })
@@ -41,30 +69,25 @@ document.getElementById('btnEqual').addEventListener('click', function () {
 document.getElementById('btnOver').addEventListener('click', function () {
     if (gameRun) {
         if (minValue === maxValue) {
-            const phraseRandom = Math.round(Math.random());
-            const answerPhrase = (phraseRandom === 1) ?
-                `Вы загадали неправильное число!\n\u{1F914}` :
-                `Я сдаюсь..\n\u{1F92F}`;
-
-            answerField.innerText = answerPhrase;
+            answerField.innerText = getRandomGiveUpPhrase();
             gameRun = false;
         } else {
             minValue = answerNumber + 1;
             answerNumber = Math.floor((minValue + maxValue) / 2);
             orderNumber++;
             orderNumberField.innerText = orderNumber;
-            answerField.innerText = `Вы загадали число ${answerNumber}?`;
+            answerField.innerText = getRandomQuestionPhrase(answerNumber);
         }
     }
 })
 
 document.getElementById('btnRetry').addEventListener('click', function () {
-    minValue = 0;
-    maxValue = 100;
+    minValue = parseInt(prompt('Минимальное значение числа для игры', '0'));
+    maxValue = parseInt(prompt('Максимальное значение числа для игры', '100'));
     orderNumber = 1;
     answerNumber = Math.floor((minValue + maxValue) / 2);
     gameRun = true;
     orderNumberField.innerText = orderNumber;
-    answerField.innerText = `Вы загадали число ${answerNumber}?`;
+    answerField.innerText = getRandomQuestionPhrase(answerNumber);
     alert(`Загадайте любое целое число от ${minValue} до ${maxValue}, а я его угадаю`);
 })
