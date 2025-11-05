@@ -1,5 +1,9 @@
-let minValue = parseInt(prompt('Минимальное знание числа для игры', '0'));
-let maxValue = parseInt(prompt('Максимальное знание числа для игры', '100'));
+let minValue = parseInt(prompt('Минимальное знание числа для игры', '0')) || 0;
+let maxValue = parseInt(prompt('Максимальное знание числа для игры', '100')) || 100;
+
+minValue = minValue < -999 ? -999 : (minValue > 999 ? 999 : minValue);
+maxValue = maxValue < -999 ? -999 : (maxValue > 999 ? 999 : maxValue);
+
 alert(`Загадайте любое целое число от ${minValue} до ${maxValue}, а я его угадаю`);
 let answerNumber = Math.floor((minValue + maxValue) / 2);
 let orderNumber = 1;
@@ -8,7 +12,6 @@ let gameRun = true;
 const orderNumberField = document.getElementById('orderNumberField');
 const answerField = document.getElementById('answerField');
 
-// Функция для получения случайной фразы вопроса
 function getRandomQuestionPhrase(number) {
     const random = Math.round(Math.random() * 2);
     const phrases = [
@@ -19,7 +22,6 @@ function getRandomQuestionPhrase(number) {
     return phrases[random];
 }
 
-// Функция для получения случайной фразы при успехе
 function getRandomSuccessPhrase() {
     const random = Math.round(Math.random() * 2);
     const phrases = [
@@ -30,7 +32,6 @@ function getRandomSuccessPhrase() {
     return phrases[random];
 }
 
-// Функция для получения случайной фразы при сдаче
 function getRandomGiveUpPhrase() {
     const random = Math.round(Math.random() * 2);
     const phrases = [
@@ -82,8 +83,12 @@ document.getElementById('btnOver').addEventListener('click', function () {
 })
 
 document.getElementById('btnRetry').addEventListener('click', function () {
-    minValue = parseInt(prompt('Минимальное значение числа для игры', '0'));
-    maxValue = parseInt(prompt('Максимальное значение числа для игры', '100'));
+    minValue = parseInt(prompt('Минимальное значение числа для игры', '0')) || 0;
+    maxValue = parseInt(prompt('Максимальное значение числа для игры', '100')) || 100;
+
+    minValue = minValue < -999 ? -999 : (minValue > 999 ? 999 : minValue);
+    maxValue = maxValue < -999 ? -999 : (maxValue > 999 ? 999 : maxValue);
+
     orderNumber = 1;
     answerNumber = Math.floor((minValue + maxValue) / 2);
     gameRun = true;
