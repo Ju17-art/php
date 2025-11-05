@@ -12,12 +12,49 @@ let gameRun = true;
 const orderNumberField = document.getElementById('orderNumberField');
 const answerField = document.getElementById('answerField');
 
+function numberToText(number) {
+    const units = ['', 'один', 'два', 'три', 'четыре', 'пять', 'шесть', 'семь', 'восемь', 'девять'];
+    const teens = ['десять', 'одиннадцать', 'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать', 'шестнадцать', 'семнадцать', 'восемнадцать', 'девятнадцать'];
+    const tens = ['', '', 'двадцать', 'тридцать', 'сорок', 'пятьдесят', 'шестьдесят', 'семьдесят', 'восемьдесят', 'девяносто'];
+    const hundreds = ['', 'сто', 'двести', 'триста', 'четыреста', 'пятьсот', 'шестьсот', 'семьсот', 'восемьсот', 'девятьсот'];
+
+    if (number === 0) return 'ноль';
+    if (number < 0) return 'минус ' + numberToText(-number);
+
+    let result = '';
+
+    if (number >= 100) {
+        result += hundreds[Math.floor(number / 100)] + ' ';
+        number %= 100;
+    }
+
+    if (number >= 20) {
+        result += tens[Math.floor(number / 10)] + ' ';
+        number %= 10;
+    } else if (number >= 10) {
+        result += teens[number - 10] + ' ';
+        number = 0;
+    }
+
+    if (number > 0) {
+        result += units[number] + ' ';
+    }
+
+    return result.trim();
+}
+
+function formatNumber(number) {
+    const textForm = numberToText(number);
+    return textForm.length < 20 ? textForm : number.toString();
+}
+
 function getRandomQuestionPhrase(number) {
     const random = Math.round(Math.random() * 2);
+    const formattedNumber = formatNumber(number);
     const phrases = [
-        `Да это легко! Ты загадал ${number}?`,
-        `Наверное, это число ${number}?`,
-        `Вы загадали число ${number}?`
+        `Да это легко! Ты загадал ${formattedNumber}?`,
+        `Наверное, это число ${formattedNumber}?`,
+        `Вы загадали число ${formattedNumber}?`
     ];
     return phrases[random];
 }
