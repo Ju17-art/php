@@ -5,6 +5,7 @@ function displayPerson(person) {
     document.getElementById('genderOutput').innerText = person.gender;
     document.getElementById('commaOutput').innerText = ', ';
     document.getElementById('birthYearOutput').innerText = person.birthYear + ' года рождения';
+    document.getElementById('birthYearOutput').innerText = person.birthDate;
     document.getElementById('professionOutput').innerText = person.profession;
 }
 

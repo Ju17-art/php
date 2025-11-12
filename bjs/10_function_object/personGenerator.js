@@ -20,6 +20,7 @@ const personGenerator = {
             "id_16": "Морозов"
         }
     }`,
+
     firstNameMaleJson: `{
         "count": 10,
         "list": {     
@@ -116,6 +117,24 @@ const personGenerator = {
         }
     }`,
 
+    monthsJson: `{
+        "count": 12,
+        "list": {     
+            "id_1": "января",
+            "id_2": "февраля",
+            "id_3": "марта",
+            "id_4": "апреля",
+            "id_5": "мая",
+            "id_6": "июня",
+            "id_7": "июля",
+            "id_8": "августа",
+            "id_9": "сентября",
+            "id_10": "октября",
+            "id_11": "ноября",
+            "id_12": "декабря"
+        }
+    }`,
+
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
 
@@ -159,6 +178,33 @@ const personGenerator = {
         return this.randomIntNumber(2000, 1970);
     },
 
+    randomMonthNumber: function () {
+        return this.randomIntNumber(1, 12);
+    },
+
+    randomMonthName: function () {
+        return this.randomValue(this.monthsJson);
+    },
+
+    randomBirthDate: function () {
+        const year = this.randomBirthYear();
+        const monthNumber = this.randomMonthNumber();
+        const monthName = this.randomMonthName();
+
+        let maxDays;
+        if (monthNumber === 2) {
+            maxDays = 28;
+        } else if ([4, 6, 9, 11].includes(monthNumber)) {
+            maxDays = 30;
+        } else {
+            maxDays = 31;
+        }
+
+        const day = this.randomIntNumber(1, maxDays);
+
+        return `${day} ${monthName} ${year} года`;
+    },
+
     randomProfession: function (gender) {
         if (gender === this.GENDER_FEMALE) {
             return this.randomValue(this.professionFemaleJson);
@@ -174,6 +220,7 @@ const personGenerator = {
         this.person.middleName = this.randomMiddleName(this.person.gender);
         this.person.surname = this.randomSurname(this.person.gender);
         this.person.birthYear = this.randomBirthYear();
+        this.person.birthDate = this.randomBirthDate();
         this.person.profession = this.randomProfession(this.person.gender);
         return this.person;
     }
