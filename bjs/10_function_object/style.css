@@ -1,0 +1,22 @@
+.container {
+    margin-top: 80px;
+}
+
+.card {
+    border: 1px solid #dee2e6;
+}
+
+.card-body p {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#professionOutput {
+    font-size: 1.2em;
+    color: #2c3e50;
+}
+
+.card-header p {
+    font-size: 1.3em;
+    font-weight: bold;
+}
