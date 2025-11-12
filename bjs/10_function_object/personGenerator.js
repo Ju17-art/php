@@ -117,23 +117,23 @@ const personGenerator = {
         }
     }`,
 
-    monthsJson: `{
-        "count": 12,
-        "list": {     
-            "id_1": "января",
-            "id_2": "февраля",
-            "id_3": "марта",
-            "id_4": "апреля",
-            "id_5": "мая",
-            "id_6": "июня",
-            "id_7": "июля",
-            "id_8": "августа",
-            "id_9": "сентября",
-            "id_10": "октября",
-            "id_11": "ноября",
-            "id_12": "декабря"
-        }
-    }`,
+    monthsDataJson: `{
+    "count": 12,
+    "list": {     
+        "id_1": {"name": "января", "days": 31},
+        "id_2": {"name": "февраля", "days": 28},
+        "id_3": {"name": "марта", "days": 31},
+        "id_4": {"name": "апреля", "days": 30},
+        "id_5": {"name": "мая", "days": 31},
+        "id_6": {"name": "июня", "days": 30},
+        "id_7": {"name": "июля", "days": 31},
+        "id_8": {"name": "августа", "days": 31},
+        "id_9": {"name": "сентября", "days": 30},
+        "id_10": {"name": "октября", "days": 31},
+        "id_11": {"name": "ноября", "days": 30},
+        "id_12": {"name": "декабря", "days": 31}
+    }
+}`,
 
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
@@ -178,31 +178,11 @@ const personGenerator = {
         return this.randomIntNumber(2000, 1970);
     },
 
-    randomMonthNumber: function () {
-        return this.randomIntNumber(1, 12);
-    },
-
-    randomMonthName: function () {
-        return this.randomValue(this.monthsJson);
-    },
-
     randomBirthDate: function () {
         const year = this.randomBirthYear();
-        const monthNumber = this.randomMonthNumber();
-        const monthName = this.randomMonthName();
-
-        let maxDays;
-        if (monthNumber === 2) {
-            maxDays = 28;
-        } else if ([4, 6, 9, 11].includes(monthNumber)) {
-            maxDays = 30;
-        } else {
-            maxDays = 31;
-        }
-
-        const day = this.randomIntNumber(1, maxDays);
-
-        return `${day} ${monthName} ${year} года`;
+        const monthData = this.randomValue(this.monthsDataJson);
+        const day = this.randomIntNumber(1, monthData.days);
+        return `${day} ${monthData.name} ${year} года рождения`;
     },
 
     randomProfession: function (gender) {
